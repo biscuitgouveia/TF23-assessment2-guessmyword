@@ -12,6 +12,30 @@ Guess My Word Assessment
   * If there are any more of the letter in the target word but they are in the wrong place in the guessed word, they will be formatted yellow
   * If the number of formatted letters in the guess word is equal to the number of instances of that letter in the target word, any remaining instances of that letter in the guess word will be formatted as white
 
+#### Simple Flowchart
+
+```mermaid
+flowchart TD
+
+    A([Start]) --> B[/Input guess_word, target_word/]
+
+    B --> C[score_string = empty string\nscore_list = empty list\ntarget_frequency = empty dictionary\nguess_frequency = empty dictionary\ngreen = ANSI code for green\nyellow = ANSI code for yellow\nwhite = ANSI code for white]
+
+    C --> D[["Loop through letters in guess_word\nAppend (letter, white) to score_list for each letter"]]
+
+    D --> E[[Loop through letters in target_word\nAdd letter-frequency pairs to target_frequency]]
+
+    E --> F[[Loop through letters in guess_word\nAdd each letter with a frequency of 0 to guess_frequency]]
+
+    F --> G[["Loop through letters in guess_word\nSet ones in the correct place to (letter, green) in score_list"]]
+
+    G --> H[["Loop through letters in guess_word\nIgnore if already green\nSet to yellow if right letter, wrong place\nElse set to white"]]
+
+    H --> I[["Loop through score_list\nAdd colour+letter for each to score_string"]]
+
+    I --> J([Return score_string])
+```
+
 #### Pseudocode
 
 ```angular2html
@@ -54,7 +78,7 @@ score_word(guess_word, target_word):
   
   return score_string
 ```
-#### Flowchart
+#### In Depth Flowchart
 
 ```mermaid
 flowchart TD
@@ -88,6 +112,56 @@ flowchart TD
     L -->|No| H
 
     L -->|Yes| M([End Loop])
+
+    M --> N([Start Loop\nfor each letter in guess_word])
+
+    N --> O{Is letter same\nas target_word at\nsame index?}
+
+    O -->|Yes| P["guess_frequency[letter] += 1\nSet letter to green in score_list"]
+
+    O -->|No| N
+
+    P --> Q{Is last letter?}
+
+    Q -->|No| N
+
+    Q -->|Yes| R([End Loop])
+
+    R --> S([Start Loop\nfor each letter in guess_word])
+
+    S --> T{Is letter same\nas target_word at\nsame index?}
+
+    T -->|Yes| S
+
+    T -->|No| U["guess_frequency[letter] += 1"]
+
+    U --> V{Is letter in target_word\nsomewhere?}
+
+    V -->|No| W[Set letter to white in score_list]
+
+    W --> Y{Is last letter?}
+
+    Y -->|No| S
+
+    V -->|Yes| Z{"Is guess_frequency[letter]\n<= target_frequency[letter]?"}
+
+    Z -->|No| W
+
+    Z -->|Yes| AA[Set letter to yellow in score_list]
+
+    AA -->Y
+
+    Y -->|Yes| AB([End Loop])
+
+    AB --> AC([Start loop\nfor each entry in score_list])
+
+    AC --> AD[Add colour + letter to score_string]
+
+    AD --> AE{Is last entry?}
+
+    AE -->|No| AC
+
+    AE -->|Yes| AF[/Return score_string/]
 ```
 
 #### Code

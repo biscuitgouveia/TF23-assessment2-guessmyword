@@ -64,7 +64,7 @@ def score_word(guess_word, target_word):
 
     for counter, letter in enumerate(guess_word):
         if score_list[counter][1] == green:
-            continue
+            continu
         else:
             guess_frequency[letter] += 1
         if letter in target_word and guess_frequency[letter] <= target_frequency[letter]:

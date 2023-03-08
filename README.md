@@ -54,6 +54,41 @@ score_word(guess_word, target_word):
   
   return score_string
 ```
+#### Flowchart
+
+```mermaid
+flowchart TD
+
+    A([Start]) --> B[/Input guess_word, target_word/]
+
+    B --> C[score_string = empty string\nscore_list = empty list\ntarget_frequency = empty dictionary\nguess_frequency = empty dictionary\ngreen = ANSI code for green\nyellow = ANSI code for yellow\nwhite = ANSI code for white]
+
+    C --> D([Begin Loop\nFor each letter in guess_word:])
+
+    D --> E[["Append (letter, white) to score_list"]]
+
+    E --> F{Is last letter?}
+
+    F -->|No| D
+
+    F -->|Yes| G([End Loop])
+
+    G --> H([Start Loop\nfor each letter in target_word])
+
+    H --> I{Is letter in\ntarget_frequency?}
+
+    I -->|No| J[Add letter = 1 to target_frequency]
+
+    I -->|Yes| K[Add 1 to letter in target_frequency]
+
+    J --> L{Is last letter?}
+
+    K --> L
+
+    L -->|No| H
+
+    L -->|Yes| M([End Loop])
+```
 
 #### Code
 

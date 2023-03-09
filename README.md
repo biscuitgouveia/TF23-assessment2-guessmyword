@@ -2,6 +2,11 @@
 Guess My Word Assessment
 
 ### Scoring Algorithm
+
+#### Objective
+
+Take an input of two strings of five letters (one being the guess and the other the target word) and compare them, then output a string of the guess word formatted according to the below rules to represent how close the guess word is to the target word.
+
 #### Rules:
 * Letters matching and in the correct place will be formatted green
 * Letters matching and in the wrong place will be formatted yellow
@@ -11,6 +16,18 @@ Guess My Word Assessment
   * Any letters in the correct place will be formatted green first
   * If there are any more of the letter in the target word but they are in the wrong place in the guessed word, they will be formatted yellow
   * If the number of formatted letters in the guess word is equal to the number of instances of that letter in the target word, any remaining instances of that letter in the guess word will be formatted as white
+
+#### Test Cases:
+
+#### TODO - Finish this:
+
+| Test                                               | Example Guess | Example Target | Result  | Verdict |
+| :----:                                             | :-----------: | :------------: | :----:  | :-----: |
+| All letters the same, in the correct place         | Hello         | Hello          | GGGGG   | Pass    |
+| All letters the same, in the wrong place           | Shore         | Hoser          | YYYYY   | Pass    |
+| All letters wrong                                  | Hello         | Punch          | WWWWW   | Pass    |
+| More instances of a letter in target than in guess | Imply         | Hello          | WWWGW   | Pass    |
+| More instances of a letter in target than in guess | Eased         | Levee          | YWWGW   | Pass    |
 
 #### Simple Flowchart
 

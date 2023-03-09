@@ -1,39 +1,17 @@
 import random
 
-all_words = open("word-bank/all_words.txt")
+MAX_TRIES = 6
+ALL_WORDS = open("word-bank/all_words.txt")
+attempts = 0
+game_state = "in_game"
 
 def choose_word(word_list):
-    target_words = open("word-bank/target_words.txt")
-    target_words_list = target_words.readlines()
-    return random.choice(target_words_list)
+    valid_words= open("word-bank/target_words.txt")
+    valid_words_list = valid_words.readlines()
+    target_word = random.choice(valid_words_list)
+    return random.choice(target_word)
 
-# TODO: Find a way to handle double letters
-
-'''
-def score_word(guess_word, target_word):
-    score_string = str()
-    target_frequency = dict()
-    guess_frequency = dict()
-
-    for letter in target_word:
-        if letter not in target_frequency:
-            target_frequency[letter] = 1
-        else:
-            target_frequency[letter] += 1
-
-    for letter in guess_word:
-        guess_frequency[letter] = 0
-
-    for counter, letter in enumerate(guess_word):
-        guess_frequency[letter] += 1
-        if letter == target_word[counter] and guess_frequency[letter] <= target_frequency[letter]:
-            score_string += "\033[0;32m" + letter
-        elif letter in target_word and guess_frequency[letter] <= target_frequency[letter]:
-            score_string += "\033[1;33m" + letter
-        else:
-            score_string += "\033[1;37m" + letter
-    return score_string
-'''
+# TODO: Simplify the scoring algorithm. It works, but it's a bit convoluted
 
 def score_word(guess_word, target_word):
 
@@ -77,8 +55,19 @@ def score_word(guess_word, target_word):
 
     return score_string
 
+def validate_word(guess_word):
+    if len(guess_word) < 5:
+        return "Invalid - Not enough letters. Please enter a five letter English word: "
+    elif len(guess_word):
+        return "Invalid - Too many letters. Please enter a five letter English word: "
+    elif word not in ALL_WORDS.readlines():
+        return "Invalid - Word not found in the dictionary. Please try again: "
+    elif guess_word == target_word:
+        return "win"
+    else:
+        return True
 
+target_word = choose_word("word-bank/target_words.txt")
+guess_word = input("Type a five letter English word and press enter: ")
 
-current_word = (choose_word("word-bank/all_words.txt"))
-print(current_word)
-print(score_word("hello", current_word))
+while game_state == in_game:

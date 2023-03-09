@@ -21,13 +21,15 @@ Take an input of two strings of five letters (one being the guess and the other 
 
 #### TODO - Finish this:
 
-| Test                                               | Example Guess | Example Target | Result  | Verdict |
-| :----:                                             | :-----------: | :------------: | :----:  | :-----: |
-| All letters the same, in the correct place         | Hello         | Hello          | GGGGG   | Pass    |
-| All letters the same, in the wrong place           | Shore         | Hoser          | YYYYY   | Pass    |
-| All letters wrong                                  | Hello         | Punch          | WWWWW   | Pass    |
-| More instances of a letter in target than in guess | Imply         | Hello          | WWWGW   | Pass    |
-| More instances of a letter in target than in guess | Eased         | Levee          | YWWGW   | Pass    |
+|                        Test                        | Example Guess | Example Target | Result | Verdict |
+|:--------------------------------------------------:|:-------------:|:--------------:|:------:| :-----: |
+|     All letters the same, in the correct place     |     Hello     |     Hello      | GGGGG  | Pass    |
+|      All letters the same, in the wrong place      |     Shore     |     Hoser      | YYYYY  | Pass    |
+|                 All letters wrong                  |     Hello     |     Punch      | WWWWW  | Pass    |
+| More instances of a letter in target than in guess |     Imply     |     Hello      | WWWGW  | Pass    |
+| More instances of a letter in target than in guess |     Eased     |     Levee      | YWWGW  | Pass    |
+| More instances of a letter in guess than in target |     Levee     |     Eased      | WYWGW  | Pass    |
+| More instances of a letter in guess than in target |     Hello     |     Imply      | WWWGW  | Pass    |
 
 #### Simple Flowchart
 

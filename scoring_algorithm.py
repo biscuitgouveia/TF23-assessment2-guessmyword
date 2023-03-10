@@ -1,13 +1,13 @@
 import random
 
 MAX_TRIES = 6
-ALL_WORDS = open("word-bank/all_words.txt")
+TARGET_WORDS = open("word-bank/all_words.txt")
+VALID_WORDS = open("word-bank/target_words.txt")
 attempts = 0
 game_state = "in_game"
 
 def choose_word(word_list):
-    valid_words= open("word-bank/target_words.txt")
-    valid_words_list = valid_words.readlines()
+    valid_words_list = word_list.readlines()
     target_word = random.choice(valid_words_list)
     return random.choice(target_word)
 

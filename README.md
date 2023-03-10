@@ -1,6 +1,59 @@
 # TF23-assessment2-guessmyword
 Guess My Word Assessment
 
+## General Flow of Game / User Experience
+
+### Flowchart
+
+```mermaid
+flowchart TD
+    A([Start Program]) --> B[Print Instructions]
+
+    B --> BB([Start game loop])
+
+    BB --> CC[[Generate target word]]
+
+    CC --> C([Start Game Round Loop])
+
+    C --> D[/Prompt user for a guess/]
+
+    D --> DD{Is the word valid?}
+
+    DD -->|Yes| E{Does the guess\nword match the\ntarget word?}
+
+    DD -->|No| EE[/Prompt the user for\ncorrect input/]
+
+    EE --> D
+
+    E -->|No| F[[Score the guess and return\na colour formatted version\nof the guess word]]
+
+    F --> G{Have six turns\nbeen played?}
+
+    G -->|No| D
+
+    G -->|Yes| GG[Set game state to player loss]
+    
+    GG --> H([End Game Round Loop])
+
+    H --> HH{Did the player\nwin?}
+    
+    HH -->|No| I[/Player loses - display\nlose message/]
+
+    E -->|Yes| J[Set game state to player win]
+
+    J --> H
+
+    HH -->|Yes| K[/Player wins - display\nwin message/]
+
+    I --> L{Prompt the player\nto play again}
+
+    K --> L
+
+    L -->|Yes| BB
+
+    L -->|No| M([Exit game])
+```
+
 ### Scoring Algorithm
 
 #### Objective

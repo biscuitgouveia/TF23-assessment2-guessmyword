@@ -9,7 +9,7 @@ Guess My Word Assessment
 flowchart TD
     A([Start Program]) --> B[Print Instructions]
     B --> BB([Start game loop])    
-    BB --> BBB[Set game state to in progress]]
+    BB --> BBB[Set game state to in progress]
     BBB --> CC[[Generate target word]]
     CC --> C([Start Game Round Loop])
     C --> D[/Prompt user for a guess/]

@@ -1,13 +1,14 @@
 import random
 
 # TODO - List of letters guessed and not guessed at the bottom of the terminal every turn
-# TODO - Stack of previous guesses like in real Wordle
-# TODO - Counter for how many turns left
+#        - Done but lists letters which are green sometimes when there is another instance
+#          of that letter in white elsewhere in the guess
 
 # Variable declarations
 MAX_TRIES = 6
 attempts = 0
 game_state = "in_game"
+guesses = list()
 
 
 # Function definitions
@@ -61,7 +62,7 @@ def score_word(guess_word, target_word):
     for letter in score_list:
         score_string += letter[1] + letter[0]
 
-    return score_string + colour_reset
+    return (score_string + colour_reset, score_list)
 
 # Function to validate the guess as being a 5 letter English word
 def validate_word(guess_word):
@@ -88,6 +89,7 @@ while True:
     current_target = choose_word()
     print("Word selected! Time to play!")
     print(current_target)
+    guessed_letters = list()
 
     while game_state == "in_game":
         current_guess = input("Please type a 5 letter English word: ")
@@ -100,12 +102,29 @@ while True:
             game_state = "win"
             break
         else:
-            print(score_word(current_guess, current_target))
+            current_guess_score = score_word(current_guess, current_target)
+            guesses.append(current_guess_score[0])
+            for letter in current_guess_score[1]:
+                if letter[0] in guessed_letters:
+                    continue
+                elif letter[1] == "\033[0;37m":
+                    guessed_letters.append(letter[0])
+
             attempts += 1
+            for guess in guesses:
+                print(guess)
+            guessed_letters.sort()
+            guessed_letters_string = str()
+            for letter in guessed_letters:
+                letter = letter.upper()
+                guessed_letters_string += f"{letter} "
+            print(f"Wrong Letters: {guessed_letters_string}")
 
         if attempts >= 6:
             game_state = "lose"
             break
+
+        print(f"You have {6 - attempts} guesses remaining.")
 
     # TODO - Write end game interaction
     if game_state == "win":
@@ -117,6 +136,7 @@ while True:
 
     if decision == 'Y':
         game_state = "in_game"
+        attempts = 0
         continue
     else:
         break

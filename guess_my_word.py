@@ -285,9 +285,9 @@ def ask_for_guess(valid_words):
     current_guess_accepted = False
     current_guess = input("Please enter a five letter English word: ")
     current_guess = current_guess.lower()
-
+    tomfoolery_counter = 0
+    
     while current_guess_accepted == False:
-        tomfoolery_counter = 0
         if tomfoolery_counter >= 5:
             current_guess = input("Are you just messing with me at this point? I just need a five letter word in English! Try again: ")
         if len(current_guess) > 5:

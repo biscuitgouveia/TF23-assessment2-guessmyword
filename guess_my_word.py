@@ -165,6 +165,7 @@ def play():
         word_of_the_day = get_target_word()
         valid_words = get_valid_words()
         letter_dictionary = generate_letters()
+        guesses_list = list()
 
         while turns_taken <= MAX_ATTEMPTS:
             remaining_turns = MAX_ATTEMPTS - turns_taken
@@ -179,8 +180,11 @@ def play():
             guess = ask_for_guess(valid_words)
             score = score_guess(guess, word_of_the_day)
             turns_taken += 1
+            guesses_list.append(format_score(guess, score))
             print("Here's how close you got:\n")
-            print(format_score(guess, score) + '\n')
+            for entry in guesses_list:
+                print(entry)
+            print("\n")
 
             if is_correct(score):
                 win_state = True

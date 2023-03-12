@@ -1,72 +1,106 @@
 import random
 
-# TODO - List of letters guessed and not guessed at the bottom of the terminal every turn
-#        - Done but lists letters which are green sometimes when there is another instance
-#          of that letter in white elsewhere in the guess
-
 # Variable declarations
+ALL_WORDS = "word-bank/all_words.txt"
+TARGET_WORDS = "word-bank/target_words.txt"
 MAX_TRIES = 6
 attempts = 0
 game_state = "in_game"
 guesses = list()
 
-
 # Function definitions
-# Function to choose a word for the current round
-def choose_word():
-    TARGET_WORDS = open("word-bank/target_words.txt")
-    target_words_list = TARGET_WORDS.readlines()
-    target_word = random.choice(target_words_list)
+def get_target_word(file_path=TARGET_WORDS, seed=None):
+    """Picks a random word from a file of words
+
+    Args:
+        file_path (str): the path to the file containing the words
+
+    Returns:
+        str: a random word from the file
+
+    >>> get_target_word(seed=0)
+    'aback'
+    >>> get_target_word(seed=-1)
+    'zonal'
+
+    """
+
+    target_words_handle = open(file_path)
+    target_words_list = target_words_handle.readlines()
+
+    if seed=None:
+        target_word = random.choice(target_words_list)
+    else:
+        target_word = target_words_list[seed]
+
     return target_word.rstrip()
 
-# TODO: Simplify the scoring algorithm. It works, but it's a bit convoluted
-# Function to compare the guessed word and the target word and return a colour-formatted string
-def score_word(guess_word, target_word):
+def score_guess(guess, target_word):
+    """given two strings of equal length, returns a tuple of ints representing the score of the guess
+    against the target word (MISS (0), MISPLACED (1), or EXACT (2)
+    Here are some examples (will run as doctest):
 
-    score_string = str()
-    score_list = list()
+    >>> score_guess('hello', 'hello')
+    (2, 2, 2, 2, 2)
+    >>> score_guess('drain', 'float')
+    (0, 0, 1, 0, 0)
+    >>> score_guess('hello', 'spams')
+    (0, 0, 0, 0, 0)
+    >>> score_guess('gauge', 'range')
+    (0, 2, 0, 2, 2)
+    >>> score_guess('melee', 'erect')
+    (0, 1, 0, 1, 0)
+    >>> score_guess('array', 'spray')
+    (0, 0, 2, 2, 2)
+    >>> score_guess('train', 'tenor')
+    (2, 1, 0, 0, 1)
+        """
+
+    if guess == target_word:
+        return (2, 2, 2, 2, 2)
+
+    score_list = [0, 0, 0, 0, 0]
     target_frequency = dict()
     guess_frequency = dict()
-    green = "\033[0;32m"
-    yellow = "\033[0;33m"
-    white = "\033[0;37m"
-    colour_reset = "\u001b[0m"
 
-    for letter in guess_word:
-        score_list.append((letter, white))
-
-    for letter in target_word:
-        if letter not in target_frequency:
-            target_frequency[letter] = 1
-        else:
-            target_frequency[letter] += 1
-
-    for letter in guess_word:
-        guess_frequency[letter] = 0
-
-    for counter, letter in enumerate(guess_word):
-        if letter == target_word[counter]:
+    for word_index, letter in enumerate(guess):
+        target_frequency[target_word[word_index]] = target_word.count(target_word[word_index])
+        if letter not in guess_frequency:
+            guess_frequency[letter] = 0
+        if letter == target_word[word_index]:
+            score_list[word_index] = 2
             guess_frequency[letter] += 1
-            score_list[counter] = (letter, green)
+        elif letter not in target_word:
+            score_list[word_index] = 0
 
-    for counter, letter in enumerate(guess_word):
-        if score_list[counter][1] == green:
-            continue
-        else:
-            guess_frequency[letter] += 1
-        if letter in target_word and guess_frequency[letter] <= target_frequency[letter]:
-            score_list[counter] = (letter, yellow)
-        else:
-            score_list[counter] = (letter, white)
+    for word_index, letter in enumerate(guess):
+        if letter in target_word:
+            if score_list[word_index] == 2:
+                continue
+            elif guess_frequency[letter] < target_frequency[letter]:
+                score_list[word_index] = 1
+                guess_frequency[letter] += 1
 
-    for letter in score_list:
-        score_string += letter[1] + letter[0]
+    return tuple(score_list)
 
-    return (score_string + colour_reset, score_list)
+def get_valid_words(file_path=ALL_WORDS):
+    """returns a list containing all valid words.
+    Note to test that the file is read correctly, use:
+    >>> get_valid_words()[0]
+    'aahed'
+    >>> get_valid_words()[-1]
+    'zymic'
+    >>> get_valid_words()[10:15]
+    ['abamp', 'aband', 'abase', 'abash', 'abask']
+    """
+    # read words from files and return a list containing all words that can be entered as guesses
+    all_words_handle = open(file_path)
+    all_words_list = all_words_handle.readlines()
+    return all_words_list
 
 # Function to validate the guess as being a 5 letter English word
 def validate_word(guess_word):
-    VALID_WORDS = open("word-bank/all_words.txt")
+
 
     if len(guess_word) < 5:
         return "Invalid - Not enough letters!"
@@ -81,6 +115,16 @@ def validate_word(guess_word):
 
     return f"Invalid - \'{guess_word}\' is not found in the dictionary!"
 
+
+
+
+
+
+
+
+
+
+'''
 # TODO: Write real instructions!
 print("These will be instructions my g")
 
@@ -140,3 +184,5 @@ while True:
         continue
     else:
         break
+        
+        '''

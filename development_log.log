@@ -1,0 +1,10 @@
+2023-03-13 21:04:48 DEBUG Test Debug message
+2023-03-13 21:04:48 INFO Test Info message
+2023-03-13 21:04:48 WARNING Test Warning message
+2023-03-13 21:04:48 ERROR Test Error message
+2023-03-13 21:04:48 CRITICAL Test Critical message
+2023-03-15 18:46:10 DEBUG Test Debug message
+2023-03-15 18:46:10 INFO Test Info message
+2023-03-15 18:46:10 WARNING Test Warning message
+2023-03-15 18:46:10 ERROR Test Error message
+2023-03-15 18:46:10 CRITICAL Test Critical message

@@ -1,23 +1,13 @@
 #!/usr/bin/env python3
-"""Guess-My-Word is a game where the player has to guess a word.
-<your description> 
-Author: <name>
-Company: <company>
-Copyright: <year>
-
 """
-# Your code must use PEP8
-# Your code must be compatible with Python 3.1x
-# You cannot use any libraries outside the python standard library without the explicit permission of your lecturer.
-
-# This code uses terms and symbols adopted from the following source:
-# See https://github.com/3b1b/videos/blob/68ca9cfa8cf5a41c965b2015ec8aa5f2aa288f26/_2022/wordle/simulations.py#L104
+Guess-My-Word is a game where the player has to guess a word.
+<your description> 
+Author: Ethan Gouveia
+Delivery: North Metropolitan TAFE, Unit ICTPRG302, Assessment 2
+"""
 
 import random
-
-MISS = 0  # _-.: letter not found ⬜
-MISSPLACED = 1  # O, ?: letter in wrong place 🟨
-EXACT = 2  # X, +: right letter, right place 🟩
+import logging
 
 MAX_ATTEMPTS = 6
 WORD_LENGTH = 5
@@ -152,6 +142,8 @@ def give_feedback(score, turns_taken):
         return random.choice(feedback_close_call)
     elif score.count(2) < 3 and turns_taken == 5:
         return random.choice(feedback_unlikely_win)
+    else:
+        logging.warning(f"No response match in give_feedback for turn {MAX_ATTEMPTS - turns_taken}")
 
 
 def play():
@@ -286,7 +278,7 @@ def ask_for_guess(valid_words):
     current_guess = input("Please enter a five letter English word: ")
     current_guess = current_guess.lower()
     tomfoolery_counter = 0
-    
+
     while current_guess_accepted == False:
         if tomfoolery_counter >= 5:
             current_guess = input("Are you just messing with me at this point? I just need a five letter word in English! Try again: ")
@@ -364,13 +356,14 @@ def format_score(guess, score):
     The following is an example output (you can change it to meet your own creative ideas, 
     but be sure to update these examples)
     >>> print(format_score('hello', (0,0,0,0,0)))
-    HELLO
+    \033[0;40mH\033[0;40mE\033[0;40mL\033[0;40mL\033[0;40mO\033[m
     >>> print(format_score('hello', (0,0,0,1,1)))
-    HELLO
+    \033[0;40mH\033[0;40mE\033[0;40mL\033[0;43mL\033[0;43mO\033[m
     >>> print(format_score('hello', (1,0,0,2,1)))
-    HELLO
+    \033[0;43mH\033[0;40mE\033[0;40mL\033[0;42mL\033[0;43mO\033[m
     >>> print(format_score('hello', (2,2,2,2,2)))
-    HELLO"""
+    \033[0;42mH\033[0;42mE\033[0;42mL\033[0;42mL\033[0;42mO\033[m"""
+
     green = "\033[0;42m"
     yellow = "\033[0;43m"
     black = "\033[0;40m"
@@ -391,16 +384,28 @@ def format_score(guess, score):
     return  score_formatted
 
 
-play()
+def main(test=False):
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format="%(asctime)s %(levelname)s %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+        filename="development_log.log"
+    )
 
-exit_time = input("Thank you for playing!")
+    logging.debug("Test Debug message")
+    logging.info("Test Info message")
+    logging.warning("Test Warning message")
+    logging.error("Test Error message")
+    logging.critical("Test Critical message")
 
-#def main(test=False):
-#    if test:
-#        import doctest
-#        return doctest.testmod()
-#    play()
+    #if test:
+     #   import doctest
+      #  print(doctest.testmod())
+
+    play()
+    exit_time = input("Thank you for playing!")
 
 
-#if __name__ == '__main__':
-#    print(main(test=True))
+
+if __name__ == '__main__':
+    (main(test=False))

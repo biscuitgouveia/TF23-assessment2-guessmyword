@@ -8,3 +8,10 @@
 2023-03-15 18:46:10 WARNING Test Warning message
 2023-03-15 18:46:10 ERROR Test Error message
 2023-03-15 18:46:10 CRITICAL Test Critical message
+2023-03-17 00:18:36 DEBUG Test Debug message
+2023-03-17 00:18:36 INFO Test Info message
+2023-03-17 00:18:36 WARNING Test Warning message
+2023-03-17 00:18:36 ERROR Test Error message
+2023-03-17 00:18:36 CRITICAL Test Critical message
+2023-03-17 00:20:38 WARNING No response match in give_feedback for turn 3
+2023-03-17 00:25:39 WARNING No response match in give_feedback for turn 3

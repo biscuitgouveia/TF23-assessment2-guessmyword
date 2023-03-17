@@ -18,6 +18,14 @@ LETTERS_STRING = "QWERTYUIOPASDFGHJKLZXCVBNM"
 
 
 def generate_letters(letters_input=LETTERS_STRING):
+    """Generate a dictionary of all the letters in the English
+    language with their values set as 1. Used with format_remaining_letters
+    to generate a keyboard display of previously guessed letters.
+
+    :param letters_input: string of all letters in the English language
+    :return: letter_dictionary: A dictionary of all letters in the English language with the letters as the keys and 1 as the values
+    """
+
     letter_dictionary = dict()
 
     for letter in letters_input:
@@ -28,7 +36,8 @@ def generate_letters(letters_input=LETTERS_STRING):
 
 def format_remaining_letters(letter_dictionary, score, guess):
     """Prepare display of all the letters on the keyboard, formatted as black if
-    they're viable for guesses and red if they've been ruled out.
+    they're viable for guesses, red if they've been ruled out, yellow if they're
+    in the wrong spot, and green if they're the correct letter in the right spot
 
     :param letter_dictionary: dictionary of letters with their values as 1 if ruled out of the game, and 0 otherwise
     :param score: a tuple of each letter's score, returned from the score_guess function
